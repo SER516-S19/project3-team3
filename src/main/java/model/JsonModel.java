@@ -29,7 +29,8 @@ public class JsonModel {
 	public void writeData() {
 		JSONObject json = new JSONObject();
 		json.put("title", title);
-		try (FileWriter file = new FileWriter(fileName)) {
+		try {
+            FileWriter file = new FileWriter(fileName);
 			file.write(json.toString());
 			file.flush();
 		} catch (IOException e) {
@@ -40,7 +41,8 @@ public class JsonModel {
 
 	public JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
-		try (FileReader file = new FileReader(fileName)) {
+		try {
+			FileReader file = new FileReader(fileName);
 			BufferedReader br = new BufferedReader(file);
 			String currentLine;
 			String output = "";
