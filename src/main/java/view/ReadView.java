@@ -7,13 +7,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import controller.JsonController;
+import controller.JSONController;
 
 public class ReadView extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel label;
-	JsonController controller;
+	JSONController controller;
 
 	public static void main(String[] args) {
 		ReadView frame = new ReadView();
@@ -21,7 +21,7 @@ public class ReadView extends JFrame {
 	}
 
 	public ReadView() {
-		controller = new JsonController();
+		controller = new JSONController();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
