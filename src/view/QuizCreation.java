@@ -2,28 +2,19 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 	/*
-	 *@author: Sakshi Gautam
-	 *@Description: Creating a quiz with quiz title and quiz details.
-	 *@version: 1.1 
+	 *@author: Abhishek Gupta
+	 *@Description: Added to move to next question or give up on the quiz.
+	 *@version: 1.2
 	 */
 	public class QuizCreation extends JFrame {
-		JFrame frame = new JFrame("Create Quiz");
+		JFrame frame = new JFrame("Question");
 		JPanel panel = new JPanel();
-		JButton submitButton = new JButton("Submit");
-		JButton exitButton = new JButton("Exit");
-		JLabel selectQuizName = new JLabel("Select Quiz");
-		JLabel quizTitle =new JLabel("Quiz Title");
-		JLabel quizDescription= new JLabel("Quiz Description");
-		JTextField quizDetails=new JTextField();
-		JTextField quizName= new JTextField();
+		JButton nextButton = new JButton("Next");
+		JButton giveUpButton = new JButton("Give Up");
 		public QuizCreation() {
 			panel.setLayout(new GridLayout(4,1,2,30));
-			panel.add(quizTitle);
-			panel.add(quizName);
-			panel.add(quizDescription);
-			panel.add(quizDetails);
-			panel.add(submitButton);
-			panel.add(exitButton);
+			panel.add(nextButton);
+			panel.add(giveUpButton);
 			frame.add(panel);
 			frame.pack();
 			frame.setSize(500,500);
