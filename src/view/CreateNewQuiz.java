@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -16,24 +17,22 @@ public class CreateNewQuiz extends JFrame {
     private JTextField textField_3;
     private JTextField textField_4;
     private final ButtonGroup buttonGroup = new ButtonGroup();
-    String quiztitle;
+    private String quizTitle;
     private JLabel lblQuizTitle;
     private JTextField textField_5;
     /**
      * Launch the application.
      */
-   /* public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    CreateQuestions frame = new CreateQuestions();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                CreateNewQuiz frame = new CreateNewQuiz();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-    }*/
+    }
 
     /**
      * Create the frame.
@@ -235,9 +234,9 @@ public class CreateNewQuiz extends JFrame {
                 controller.add_questions_to_quiz(questionModel);
 
                 QuizCreationAcknowledgement Acknowledgement = new QuizCreationAcknowledgement();
-                quiztitle=textField_5.getText();
-                boolean isfile=controller.write_data_to_model(quiztitle);
-                if(isfile)
+                quizTitle=textField_5.getText();
+                boolean isFile= controller.write_data_to_model(quizTitle);
+                if(isFile)
                 {
                     JOptionPane.showMessageDialog(null, "File Exits,Change Quiz Title");
                 }
