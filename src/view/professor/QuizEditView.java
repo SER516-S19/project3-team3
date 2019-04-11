@@ -1,4 +1,4 @@
-package View;
+package view.professor;
 
 import java.awt.*;
 
@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 
 import model.QuestionModel;
 import model.QuizModel;
+import view.student.QuestionAndChoicesPanel;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

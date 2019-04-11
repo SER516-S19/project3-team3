@@ -1,4 +1,4 @@
-package View;
+package view.student;
 
 import model.QuestionModel;
 
@@ -8,7 +8,7 @@ public class QuestionAndChoicesPanel extends JPanel {
 
 	private QuestionModel question;
 
-	QuestionAndChoicesPanel(QuestionModel question) {
+	public QuestionAndChoicesPanel(QuestionModel question) {
 		this.question = question;
 
 		JPanel parentPanel = new JPanel();
