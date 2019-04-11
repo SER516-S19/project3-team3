@@ -1,35 +1,39 @@
 package controller;
 
-import java.io.IOException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import Model.QuestionModel;
-import Model.QuizModel;
+import org.json.simple.parser.ParseException;
+
+import model.QuestionModel;
+import model.QuizModel;
 
 /*
 *@author: Venkata Sairam Eadala
+*@author: Joshua Drumm
 *@version: 1.0 
 */
-@SuppressWarnings("unused")
+
 public class Controller {
 
-	QuizModel model = new QuizModel();
-	QuestionModel questionModel = new QuestionModel();
-	JSONObject question;
+	private QuizModel model;
 
-	public boolean write_data_to_model(String FileName) {
-		// TODO Auto-generated method stub
-
-		boolean exists = model.write_data_model(FileName);
-
-		return exists;
-
+	public void addQuestionToQuiz(QuestionModel questionModel) {
+		model.addQuestion(questionModel);
 	}
 
-	public void add_questions_to_quiz(QuestionModel questionModel) {
+	public boolean saveModel() {
+		return model.saveQuiz();
+	}
 
-		// TODO Auto-generated method stub
-		model.add_questions_to_quizmodel(questionModel);
+	public void loadQuiz(String fileName) throws ParseException {
+		model = QuizModel.loadQuiz(fileName);
+	}
+
+	public void updateTitle(String title) {
+		model.setTitle(title);
+	}
+
+	public String getTitle() {
+		return model.getTitle();
 	}
 
 }

@@ -1,7 +1,6 @@
-package view;
+package View;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 /**
  * SelectQuizView will display the available quizzes 

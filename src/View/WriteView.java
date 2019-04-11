@@ -1,4 +1,4 @@
-package view;
+package View;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,13 +7,14 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import controller.JSONController;
+
+import controller.Controller;
 
 public class WriteView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	JSONController controller;
+	Controller controller;
 
 	public static void main(String[] args) {
 		WriteView frame = new WriteView();
@@ -21,7 +22,7 @@ public class WriteView extends JFrame {
 	}
 
 	public WriteView() {
-		controller = new JSONController();
+		controller = new Controller();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
