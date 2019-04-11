@@ -1,15 +1,20 @@
 package view;
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
 
+/*
+ *@author: Sakshi Gautam
+ *@Description: Professor application to create and edit quiz.
+ *@version: 1.1 
+ */
+
 public class welcomeProfessor extends JFrame {
 	private JFrame profFrame;
 	private JPanel contentPane;
 
-	/**
+	/*
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -25,9 +30,7 @@ public class welcomeProfessor extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public welcomeProfessor() {
 		profFrame = new JFrame("Professor Application");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
