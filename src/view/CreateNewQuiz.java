@@ -113,7 +113,7 @@ public class CreateNewQuiz extends JFrame {
             @SuppressWarnings("unchecked")
             public void actionPerformed(ActionEvent e) {
 
-                JSONObject object=	new JSONObject();
+                JSONObject object =	new JSONObject();
                 JSONArray Array =  new JSONArray();
                 String selectedText=null;
                 String text=textField.getText ();
@@ -130,12 +130,12 @@ public class CreateNewQuiz extends JFrame {
                 while(selectedButton.hasMoreElements())
                 {
 
-                    JRadioButton selectedradio=(JRadioButton) selectedButton.nextElement();
-                    if(selectedradio.isSelected())
+                    JRadioButton selectedRadio =(JRadioButton) selectedButton.nextElement();
+                    if(selectedRadio.isSelected())
                     {
-                        String selectionradiobutton=selectedradio.getName();
+                        String selectionRadioButton = selectedRadio.getName();
 
-                        switch(selectionradiobutton) {
+                        switch(selectionRadioButton) {
                             case "radioButton":
                                 selectedText=textField_1.getText ();
                                 break;
