@@ -1,7 +1,11 @@
-package view;
+package view.professor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+import model.QuestionModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
