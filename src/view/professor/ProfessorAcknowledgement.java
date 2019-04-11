@@ -49,7 +49,7 @@ public class ProfessorAcknowledgement extends JFrame {
 		JButton btnDashboard = new JButton("DashBoard");
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProfessorDashBoard DashBoard = new ProfessorDashBoard();
+				Professor DashBoard = new Professor();
 				setVisible(false);
 				DashBoard.setVisible(true);
 			}
