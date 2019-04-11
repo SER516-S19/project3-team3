@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class QuizSubmissionAcknowledgement extends JFrame {
+public class StudentAcknowledgement extends JFrame {
 
 	private JPanel contentPane;
 	//Create the Submission Acknowledgement frame.
-	public QuizSubmissionAcknowledgement() {
+	public StudentAcknowledgement() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -32,9 +32,9 @@ public class QuizSubmissionAcknowledgement extends JFrame {
 		JButton btnDashboard = new JButton("DashBoard");
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SelectQuizView studentquizview=new SelectQuizView();
+				Student student=new Student();
 				setVisible(false);
-				studentquizview.setVisible(true);
+				student.setVisible(true);
 			}
 		});
 		btnDashboard.setBounds(165, 176, 121, 23);
@@ -49,5 +49,4 @@ public class QuizSubmissionAcknowledgement extends JFrame {
 		btnExit.setBounds(301, 176, 89, 23);
 		contentPane.add(btnExit);
 	}
-
 }
