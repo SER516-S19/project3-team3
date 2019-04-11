@@ -1,4 +1,4 @@
-package view;
+package src.view;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -10,7 +10,7 @@ import java.awt.event.*;
  *@version: 1.1 
  */
 
-public class welcomeProfessor extends JFrame {
+public class WelcomeProfessor extends JFrame {
 	private JFrame profFrame;
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class welcomeProfessor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					welcomeProfessor frame = new welcomeProfessor();
+					WelcomeProfessor frame = new WelcomeProfessor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +31,7 @@ public class welcomeProfessor extends JFrame {
 	}
 
 
-	public welcomeProfessor() {
+	public WelcomeProfessor() {
 		profFrame = new JFrame("Professor Application");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
