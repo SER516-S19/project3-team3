@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class QuizCreationAcknowledgement extends JFrame {
+public class ProfessorAcknowledgement extends JFrame {
 
 	private JPanel contentPane;
 
@@ -22,7 +22,7 @@ public class QuizCreationAcknowledgement extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuizCreationAcknowledgement frame = new QuizCreationAcknowledgement();
+					ProfessorAcknowledgement frame = new ProfessorAcknowledgement();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class QuizCreationAcknowledgement extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizCreationAcknowledgement() {
+	public ProfessorAcknowledgement() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
