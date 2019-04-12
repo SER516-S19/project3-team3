@@ -70,4 +70,9 @@ public class Controller {
 		model.setTitle(quizTitle);
 	}
 
+	public void setPath(String path)
+	{
+		model.setPath(path);
+	}
+
 }

@@ -2,11 +2,15 @@ package view.professor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import org.json.simple.parser.ParseException;
+
 import controller.Controller;
 import model.QuestionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -29,6 +33,7 @@ public class CreateNewQuiz extends JFrame {
 	private JLabel lblQuizTitle;
 	private JTextField textField_5;
 	private Controller controller;
+	JFileChooser fileChooser;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -44,6 +49,9 @@ public class CreateNewQuiz extends JFrame {
 	public CreateNewQuiz() {
 
 		controller = new Controller();
+		fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("").getAbsoluteFile());
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -119,6 +127,24 @@ public class CreateNewQuiz extends JFrame {
 		btnSubmit.addActionListener(new AddAndSaveQuestionActionListener());
 		btnSubmit.setBounds(319, 227, 89, 23);
 		contentPane.add(btnSubmit);
+		
+		JButton btnDirectory = new JButton("Set Directory");
+		btnDirectory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int returnVal = fileChooser.showOpenDialog(CreateNewQuiz.this);
+
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+				    File file = fileChooser.getSelectedFile();
+					controller.setPath(file.getAbsolutePath());
+				}
+				else {
+				   System.out.println("Cancelled");
+				}
+			}
+		});
+		btnDirectory.setBounds(25, 227, 125, 23);
+		contentPane.add(btnDirectory);
 
 		controller.createQuiz();
 	}
@@ -202,11 +228,16 @@ public class CreateNewQuiz extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			super.actionPerformed(e);
 
+			quizTitle = textField_5.getText();
+			if(quizTitle.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "Please Name your Quiz");
+				return;
+			}
 			if (!checkAnyFieldsEmpty() || !checkFieldsCompletelyEmpty())
 				return;
 
 			ProfessorAcknowledgement acknowledgement = new ProfessorAcknowledgement();
-			quizTitle = textField_5.getText();
 			controller.setQuizTitle(quizTitle);
 			boolean isFile = controller.saveModel();
 			if (!isFile)

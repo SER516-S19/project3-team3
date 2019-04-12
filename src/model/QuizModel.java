@@ -88,10 +88,10 @@ public class QuizModel {
 
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
-			File fileCheckName = new File(path + fileName);
+			File fileCheckName = new File(path + '\\' + fileName);
 			if(fileCheckName.exists())
 				return false;
-			FileWriter file = new FileWriter(path + fileName);
+			FileWriter file = new FileWriter(path + '\\' + fileName);
 			
 			file.write(QuizJSON.toString());
 			file.flush();
@@ -124,7 +124,7 @@ public class QuizModel {
 	private JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
 		try {
-			FileReader file = new FileReader(path + fileName);
+			FileReader file = new FileReader(path + '\\' + fileName);
 			BufferedReader br = new BufferedReader(file);
 			String currentLine;
 			String output = "";
@@ -170,7 +170,7 @@ public class QuizModel {
 	public static QuizModel readQuiz(File file) throws ParseException
 	{
 		String filePath = file.getAbsolutePath();
-		filePath = filePath.substring(0, filePath.length() - file.getName().length());
+		filePath = filePath.substring(0, filePath.length() - (file.getName().length() + 1));
 		return loadQuiz(file.getName(), filePath);
 	}
 

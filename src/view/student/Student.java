@@ -13,7 +13,6 @@ import controller.Controller;
 /**
  *  To display the list of available quizzes
  * @author Vijaya Gadde
- *
  */
 
 public class Student extends JFrame implements ActionListener {
@@ -45,7 +44,7 @@ public class Student extends JFrame implements ActionListener {
 
    public void actionPerformed(ActionEvent e) {
       if(e.getSource() == button) {
-         int returnVal = fc.showOpenDialog(this);
+         int returnVal = fc.showOpenDialog(Student.this);
 
          if(returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
