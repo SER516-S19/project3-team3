@@ -83,6 +83,12 @@ public class QuizModel {
 		return path;
 	}
 
+    /**
+     * Writes quiz json to a file
+     *
+     * @param QuizJSON The json to write to a file
+     * @return a boolean representing a successful/failed write
+     */
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
 			File fileCheckName = new File(path + '\\' + fileName);
@@ -100,6 +106,12 @@ public class QuizModel {
 		}
 	}
 
+    /**
+     * Converts a QuizModel into a json format and calls writeData
+     * to write the json to a file
+     *
+     * @return a boolean representing a successful/failed write
+     */
 	public boolean saveQuiz() {
 		JSONObject jsonQuiz = new JSONObject();
 		JSONArray jsonQuestions = new JSONArray();
@@ -118,6 +130,11 @@ public class QuizModel {
 		return writeData(jsonQuiz);
 	}
 
+    /**
+     * Reads json from a file
+     *
+     * @return json representation of the file read
+     */
 	private JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
 		try {
@@ -141,6 +158,11 @@ public class QuizModel {
 		return loadQuiz(fileName, "");
 	}
 
+    /**
+     * Loads Quiz given a filename and path
+     *
+     * @return QuizModel representation of file contents
+     */
 	public static QuizModel loadQuiz(String fileName, String path) throws ParseException {
 		QuizModel quiz = new QuizModel(fileName, path);
 		JSONObject jsonFile = quiz.readData();
@@ -163,7 +185,12 @@ public class QuizModel {
 		return loadQuiz(fileName);
 	}
 
-	public static QuizModel readQuiz(File file) throws ParseException {
+    /**
+     * Reads quiz file
+     *
+     * @return QuizModel representation of file contents
+     */
+    public static QuizModel readQuiz(File file) throws ParseException {
 		String filePath = file.getAbsolutePath();
 		filePath = filePath.substring(0, filePath.length() - (file.getName().length() + 1));
 		return loadQuiz(file.getName(), filePath);
