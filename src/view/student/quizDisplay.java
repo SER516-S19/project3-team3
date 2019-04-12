@@ -11,6 +11,7 @@ import java.util.List;
 
 /*
  *@author: Abhishek Gupta
+ *@author: Krishna Gurram
  *@version: 1.0
  */
 public class quizDisplay extends JFrame implements ActionListener {
