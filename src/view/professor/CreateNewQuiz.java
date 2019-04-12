@@ -198,28 +198,28 @@ public class CreateNewQuiz extends JFrame {
 
 
 
-                Enumeration<AbstractButton> selectedbutton=buttonGroup.getElements();
+                Enumeration<AbstractButton> selectedButton = buttonGroup.getElements();
 
-                while(selectedbutton.hasMoreElements())
+                while(selectedButton.hasMoreElements())
                 {
 
-                    JRadioButton selectedradio=(JRadioButton) selectedbutton.nextElement();
-                    if(selectedradio.isSelected())
+                    JRadioButton selectedRadio = (JRadioButton) selectedbutton.nextElement();
+                    if(selectedRadio.isSelected())
                     {
-                        String selectionradiobutton=selectedradio.getName();
+                        String selectionRadioButton = selectedRadio.getName();
 
-                        switch(selectionradiobutton) {
+                        switch(selectionRadioButton) {
                             case "radioButton":
-                                selectedText=textField_1.getText ();
+                                selectedText = textField_1.getText ();
                                 break;
                             case "radioButton_1":
-                                selectedText=textField_2.getText ();
+                                selectedText = textField_2.getText ();
                                 break;
                             case "radioButton_2":
-                                selectedText=textField_3.getText ();
+                                selectedText = textField_3.getText ();
                                 break;
                             case "radioButton_3":
-                                selectedText=textField_4.getText ();
+                                selectedText = textField_4.getText ();
                                 break;
                         }
 
@@ -237,9 +237,9 @@ public class CreateNewQuiz extends JFrame {
                 questionModel.setQuestion(Array,text,selectedText);
                 controller.add_questions_to_quiz(questionModel);
 
-                QuizCreationAcknowledgement Acknowledgement = new QuizCreationAcknowledgement();
+                ProfessorAcknowledgement acknowledgement = new ProfessorAcknowledgement();
                 quizTitle=textField_5.getText();
-                boolean isFile= controller.write_data_to_model(quizTitle);
+                boolean isFile = controller.write_data_to_model(quizTitle);
                 if(isFile)
                 {
                     JOptionPane.showMessageDialog(null, "File Exits,Change Quiz Title");
@@ -247,7 +247,7 @@ public class CreateNewQuiz extends JFrame {
                 else
                 {
                     setVisible(false);
-                    Acknowledgement.setVisible(true);
+                    acknowledgement.setVisible(true);
                 }
             }
         });
