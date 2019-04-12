@@ -11,54 +11,32 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ProfessorAcknowledgement extends JFrame {
-
-	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProfessorAcknowledgement frame = new ProfessorAcknowledgement();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+public class ProfessorAcknowledgement extends JPanel {
 	public ProfessorAcknowledgement() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Quiz Created Successfully");
 		lblNewLabel.setBounds(149, 86, 207, 52);
-		contentPane.add(lblNewLabel);
+		this.add(lblNewLabel);
 
 		JButton btnDashboard = new JButton("DashBoard");
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Professor DashBoard = new Professor();
-				setVisible(false);
-				DashBoard.setVisible(true);
+				ProfessorApp.updatePage(View.WELCOME_VIEW);
 			}
 		});
 		btnDashboard.setBounds(165, 176, 121, 23);
-		contentPane.add(btnDashboard);
+		this.add(btnDashboard);
 
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				ProfessorApp.updatePage(View.CLOSED);
 			}
 		});
 		btnExit.setBounds(301, 176, 89, 23);
-		contentPane.add(btnExit);
+		this.add(btnExit);
 	}
-
 }
