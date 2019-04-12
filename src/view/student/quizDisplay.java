@@ -33,7 +33,7 @@ public class quizDisplay extends JFrame implements ActionListener {
 	static boolean flag = true;
 	static boolean finished = false;
 
-
+/*Get's the data from Controller and displays the quiz when the JFrame is launched initially */
 	public quizDisplay(QuestionModel ques) {
 		question = ques;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -87,6 +87,7 @@ public class quizDisplay extends JFrame implements ActionListener {
 		group.add(optionFour);
 	}
 
+/* Updates the Frame with questions and options when student clicks next button */ 
 	void updateFrame(QuestionModel ques) {
 		question = ques;
 		correctAnswers = ques.getCorrectOption();
@@ -102,6 +103,7 @@ public class quizDisplay extends JFrame implements ActionListener {
 		group.clearSelection();
 	}
 
+/* Main method to create an Instance of the JFrame */
 	public static void main(String[] args) {
 
 		QuizModel file = new QuizModel();
@@ -129,6 +131,7 @@ public class quizDisplay extends JFrame implements ActionListener {
 		});
 	}
 
+/* Checks the correct answers, Updates data and calls updateFrame() function whenever the user clicks the next button  */
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (group.getSelection().getActionCommand() == null) {
