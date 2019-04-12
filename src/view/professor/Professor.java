@@ -1,4 +1,4 @@
-package src.View.professor;
+package src.view.professor;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
