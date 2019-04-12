@@ -1,4 +1,4 @@
-package src.view;
+package src.View.professor;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -10,7 +10,7 @@ import java.awt.event.*;
  *@version: 1.1 
  */
 
-public class WelcomeProfessor extends JFrame {
+public class Professor extends JFrame {
 	private JFrame profFrame;
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class WelcomeProfessor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					WelcomeProfessor frame = new WelcomeProfessor();
+					Professor frame = new Professor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +31,7 @@ public class WelcomeProfessor extends JFrame {
 	}
 
 
-	public WelcomeProfessor() {
+	public Professor() {
 		profFrame = new JFrame("Professor Application");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -47,26 +47,16 @@ public class WelcomeProfessor extends JFrame {
 		contentPane.add(welcomeLabel);
 		
 		JButton createQuizButton = new JButton("Create Quiz");
-		JButton editQuizButton = new JButton("Edit Quiz");
 		createQuizButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//ProfessorDashBoard dashBoard=new ProfessorDashBoard();
+				CreateNewQuiz createQuiz=new CreateNewQuiz();
 				setVisible(false); // Hide current frame
-				 //dashBoard.setVisible(true);
+				createQuiz.setVisible(true);
 		       
 			}
 		});
-		editQuizButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//ProfessorDashBoard dashBoard=new ProfessorDashBoard();
-				setVisible(false); // Hide current frame
-				 //dashBoard.setVisible(true);
-		       
-			}
-		});
+
 		createQuizButton.setBounds(30, 197, 180, 23);
-		editQuizButton.setBounds(220, 197, 192, 23);
 		contentPane.add(createQuizButton);
-		contentPane.add(editQuizButton);
 	}
 }
