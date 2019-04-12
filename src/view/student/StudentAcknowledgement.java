@@ -1,8 +1,9 @@
 package view.student;
-/*
-author: Sai Vinay Gangadharabhatla.
-version: 1.0.
-*/
+
+/**
+ *@author: Sai Vinay Gangadharabhatla.
+ *@version: 1.0.
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -16,7 +17,7 @@ import java.awt.event.ActionEvent;
 public class StudentAcknowledgement extends JFrame {
 
 	private JPanel contentPane;
-	//Create the Submission Acknowledgement frame.
+
 	public StudentAcknowledgement() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

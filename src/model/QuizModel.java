@@ -15,11 +15,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /*
-*@author: Venkata Sairam Eadala
-*@author: Joshua Drumm
-*@author: Trevor Forrey
-*@version: 1.0 
-*/
+ *@author: Venkata Sairam Eadala
+ *@author: Joshua Drumm
+ *@author: Trevor Forrey
+ *@version: 1.0 
+ */
 public class QuizModel {
 
 	private String title;
@@ -36,7 +36,7 @@ public class QuizModel {
 		this();
 		setFileName(fileName);
 	}
-	
+
 	public QuizModel(String fileName, String path) {
 		this();
 		setFileName(fileName);
@@ -61,9 +61,8 @@ public class QuizModel {
 		this.title = title;
 		fileName = title.replaceAll(" ", "_") + ".json";
 	}
-	
-	public void setFileName(String fileName)
-	{
+
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
 		title = fileName.substring(0, fileName.length() - 4);
 	}
@@ -75,24 +74,22 @@ public class QuizModel {
 	public void addQuestion(QuestionModel newQuestion) {
 		this.questions.add(newQuestion);
 	}
-	
-	public void setPath(String path)
-	{
+
+	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	public String getPath()
-	{
+
+	public String getPath() {
 		return path;
 	}
 
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
 			File fileCheckName = new File(path + '\\' + fileName);
-			if(fileCheckName.exists())
+			if (fileCheckName.exists())
 				return false;
 			FileWriter file = new FileWriter(path + '\\' + fileName);
-			
+
 			file.write(QuizJSON.toString());
 			file.flush();
 			file.close();
@@ -143,8 +140,8 @@ public class QuizModel {
 	public static QuizModel loadQuiz(String fileName) throws ParseException {
 		return loadQuiz(fileName, "");
 	}
-	
-	public static QuizModel loadQuiz(String fileName, String path)  throws ParseException {
+
+	public static QuizModel loadQuiz(String fileName, String path) throws ParseException {
 		QuizModel quiz = new QuizModel(fileName, path);
 		JSONObject jsonFile = quiz.readData();
 		quiz.setTitle(fileName.replaceAll("[_]", " "));
@@ -161,14 +158,12 @@ public class QuizModel {
 
 		return quiz;
 	}
-	
-	public static QuizModel readQuiz(String fileName) throws ParseException
-	{
+
+	public static QuizModel readQuiz(String fileName) throws ParseException {
 		return loadQuiz(fileName);
 	}
-	
-	public static QuizModel readQuiz(File file) throws ParseException
-	{
+
+	public static QuizModel readQuiz(File file) throws ParseException {
 		String filePath = file.getAbsolutePath();
 		filePath = filePath.substring(0, filePath.length() - (file.getName().length() + 1));
 		return loadQuiz(file.getName(), filePath);

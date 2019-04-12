@@ -13,7 +13,7 @@ import java.awt.event.*;
 public class Professor extends JFrame {
 	private JFrame profFrame;
 	private JPanel contentPane;
-	 // Launch the application.
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -26,7 +26,7 @@ public class Professor extends JFrame {
 			}
 		});
 	}
-	
+
 	public Professor() {
 		profFrame = new JFrame("Professor Application");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

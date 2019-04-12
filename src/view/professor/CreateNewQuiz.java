@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 /*
-*@author: Bharat Goel
-*@author: Joshua Drumm
-*@version: 1.0
-*/
+ *@author: Bharat Goel
+ *@author: Joshua Drumm
+ *@version: 1.0
+ */
 @SuppressWarnings({ "serial", "unused" })
 public class CreateNewQuiz extends JFrame {
 
@@ -48,7 +48,7 @@ public class CreateNewQuiz extends JFrame {
 
 	public CreateNewQuiz() {
 
-		controller = new Controller();
+		controller = Controller.getInstance();
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("").getAbsoluteFile());
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -127,19 +127,18 @@ public class CreateNewQuiz extends JFrame {
 		btnSubmit.addActionListener(new AddAndSaveQuestionActionListener());
 		btnSubmit.setBounds(319, 227, 89, 23);
 		contentPane.add(btnSubmit);
-		
+
 		JButton btnDirectory = new JButton("Set Directory");
 		btnDirectory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int returnVal = fileChooser.showOpenDialog(CreateNewQuiz.this);
 
-				if(returnVal == JFileChooser.APPROVE_OPTION) {
-				    File file = fileChooser.getSelectedFile();
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
 					controller.setPath(file.getAbsolutePath());
-				}
-				else {
-				   System.out.println("Cancelled");
+				} else {
+					System.out.println("Cancelled");
 				}
 			}
 		});
@@ -229,8 +228,7 @@ public class CreateNewQuiz extends JFrame {
 			super.actionPerformed(e);
 
 			quizTitle = textField_5.getText();
-			if(quizTitle.isEmpty())
-			{
+			if (quizTitle.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Please Name your Quiz");
 				return;
 			}
