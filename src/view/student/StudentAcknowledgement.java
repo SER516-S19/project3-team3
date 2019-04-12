@@ -32,7 +32,7 @@ public class StudentAcknowledgement extends JFrame {
 		JButton btnDashboard = new JButton("DashBoard");
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Student student=new Student();
+				Student student = new Student();
 				setVisible(false);
 				student.setVisible(true);
 			}

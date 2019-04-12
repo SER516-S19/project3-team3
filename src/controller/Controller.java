@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
@@ -51,6 +52,11 @@ public class Controller {
 	public void createQuiz(String title)
 	{
 		model = new QuizModel(title);
+	}
+	
+	public void readQuiz(File file) throws ParseException
+	{
+		model = QuizModel.readQuiz(file);
 	}
 
 	public void addQuestion(String title, ArrayList<String> options, String correctOption)
