@@ -1,4 +1,5 @@
-package src.view.professor;
+package view.professor;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -30,7 +31,6 @@ public class Professor extends JFrame {
 		});
 	}
 
-
 	public Professor() {
 		profFrame = new JFrame("Professor Application");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,20 +39,20 @@ public class Professor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		profFrame.setSize(500,500);
+		profFrame.setSize(500, 500);
 
 		JLabel welcomeLabel = new JLabel("Welcome Professor!");
 		welcomeLabel.setBounds(120, 98, 226, 50);
 		welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(20.0f));
 		contentPane.add(welcomeLabel);
-		
+
 		JButton createQuizButton = new JButton("Create Quiz");
 		createQuizButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateNewQuiz createQuiz=new CreateNewQuiz();
+				CreateNewQuiz createQuiz = new CreateNewQuiz();
 				setVisible(false); // Hide current frame
 				createQuiz.setVisible(true);
-		       
+
 			}
 		});
 

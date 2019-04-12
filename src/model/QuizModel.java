@@ -27,17 +27,16 @@ public class QuizModel {
 	private ArrayList<QuestionModel> questions;
 
 	public QuizModel() {
-
+		this.questions = new ArrayList<QuestionModel>();
 	}
 
 	public QuizModel(String fileName) {
+		this();
 		this.fileName = fileName;
-		this.questions = new ArrayList();
 	}
 
 	public QuizModel(String title, ArrayList<QuestionModel> questions) {
-		this.title = title;
-		this.fileName = title.replaceAll(" ", "_");
+		setTitle(title);
 		this.questions = questions;
 	}
 
@@ -51,6 +50,7 @@ public class QuizModel {
 
 	public void setTitle(String title) {
 		this.title = title;
+		fileName = title.replaceAll(" ", "_");
 	}
 
 	public void setQuestions(ArrayList<QuestionModel> newQuestions) {
@@ -63,7 +63,11 @@ public class QuizModel {
 
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
+			File fileCheckName = new File(fileName + ".json");
+			if(fileCheckName.exists())
+				return false;
 			FileWriter file = new FileWriter(fileName + ".json");
+			
 			file.write(QuizJSON.toString());
 			System.out.println(QuizJSON.toString());
 			file.flush();

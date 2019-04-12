@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
@@ -34,6 +36,32 @@ public class Controller {
 
 	public String getTitle() {
 		return model.getTitle();
+	}
+	
+	public ArrayList<QuestionModel> getQuizQuestions()
+	{
+		return model.getQuestions();
+	}
+	
+	public void createQuiz()
+	{
+		model = new QuizModel();
+	}
+	
+	public void createQuiz(String title)
+	{
+		model = new QuizModel(title);
+	}
+
+	public void addQuestion(String title, ArrayList<String> options, String correctOption)
+	{
+		QuestionModel question = new QuestionModel(title, options, correctOption);
+		model.addQuestion(question);
+	}
+
+	public void setQuizTitle(String quizTitle)
+	{
+		model.setTitle(quizTitle);
 	}
 
 }
