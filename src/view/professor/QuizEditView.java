@@ -86,7 +86,8 @@ public class QuizEditView extends JFrame {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: Move anything other than getting user inputs and displaying into the controller
+				// TODO: Move anything other than getting user inputs and displaying into the
+				// controller
 				QuizModel quizToEdit = new QuizModel();
 
 				// Get quiz title out of first panel

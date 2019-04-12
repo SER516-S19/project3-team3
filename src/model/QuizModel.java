@@ -15,30 +15,38 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /*
-*@author: Venkata Sairam Eadala
-*@author: Joshua Drumm
-*@author: Trevor Forrey
-*@version: 1.0 
-*/
+ *@author: Venkata Sairam Eadala
+ *@author: Joshua Drumm
+ *@author: Trevor Forrey
+ *@version: 1.0 
+ */
 public class QuizModel {
 
 	private String title;
 	private String fileName;
+	private String path;
 	private ArrayList<QuestionModel> questions;
 
 	public QuizModel() {
-
+		setQuestions(new ArrayList<QuestionModel>());
+		setPath("");
 	}
 
 	public QuizModel(String fileName) {
-		this.fileName = fileName;
-		this.questions = new ArrayList();
+		this();
+		setFileName(fileName);
+	}
+
+	public QuizModel(String fileName, String path) {
+		this();
+		setFileName(fileName);
+		setPath(path);
 	}
 
 	public QuizModel(String title, ArrayList<QuestionModel> questions) {
-		this.title = title;
-		this.fileName = title.replaceAll(" ", "_");
-		this.questions = questions;
+		setTitle(title);
+		setQuestions(questions);
+		setPath("");
 	}
 
 	public String getTitle() {
@@ -51,6 +59,12 @@ public class QuizModel {
 
 	public void setTitle(String title) {
 		this.title = title;
+		fileName = title.replaceAll(" ", "_") + ".json";
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+		title = fileName.substring(0, fileName.length() - 4);
 	}
 
 	public void setQuestions(ArrayList<QuestionModel> newQuestions) {
@@ -61,12 +75,24 @@ public class QuizModel {
 		this.questions.add(newQuestion);
 	}
 
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
-			FileWriter file = new FileWriter(fileName + ".json");
+			File fileCheckName = new File(path + '\\' + fileName);
+			if (fileCheckName.exists())
+				return false;
+			FileWriter file = new FileWriter(path + '\\' + fileName);
+
 			file.write(QuizJSON.toString());
-			System.out.println(QuizJSON.toString());
 			file.flush();
+			file.close();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -95,7 +121,7 @@ public class QuizModel {
 	private JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
 		try {
-			FileReader file = new FileReader(fileName + ".json");
+			FileReader file = new FileReader(path + '\\' + fileName);
 			BufferedReader br = new BufferedReader(file);
 			String currentLine;
 			String output = "";
@@ -104,15 +130,19 @@ public class QuizModel {
 				output += currentLine + '\n';
 			JSONParser parser = new JSONParser();
 			json = (JSONObject) parser.parse(output);
+			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(json);
 		return json;
 	}
 
 	public static QuizModel loadQuiz(String fileName) throws ParseException {
-		QuizModel quiz = new QuizModel(fileName);
+		return loadQuiz(fileName, "");
+	}
+
+	public static QuizModel loadQuiz(String fileName, String path) throws ParseException {
+		QuizModel quiz = new QuizModel(fileName, path);
 		JSONObject jsonFile = quiz.readData();
 		quiz.setTitle(fileName.replaceAll("[_]", " "));
 		JSONArray jsonQuestions = (JSONArray) jsonFile.get("questions");
@@ -127,7 +157,16 @@ public class QuizModel {
 		}
 
 		return quiz;
+	}
 
+	public static QuizModel readQuiz(String fileName) throws ParseException {
+		return loadQuiz(fileName);
+	}
+
+	public static QuizModel readQuiz(File file) throws ParseException {
+		String filePath = file.getAbsolutePath();
+		filePath = filePath.substring(0, filePath.length() - (file.getName().length() + 1));
+		return loadQuiz(file.getName(), filePath);
 	}
 
 }
