@@ -1,34 +1,54 @@
 package view.student;
 
 import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import javax.swing.SwingUtilities;
 import javax.swing.*;
+import javax.swing.filechooser.*;
 /**
- *  To display the list of available quizzes 
+ *  To display the list of available quizzes
  * @author Vijaya Gadde
  *
  */
-public class Student  {
-	JFrame frame = new JFrame("Student Quiz Application");
-	JPanel panel = new JPanel();
-	String quizzes[] = { "QuizFinal", "QuizFinal1", "QuizFinal2" };
-	JComboBox comboBox= new JComboBox(quizzes);
-	JButton button = new JButton("Take Quiz");
-	JLabel pageName = new JLabel("Student Dashboard");
-	JLabel selectQuizName = new JLabel("Select Quiz"); 
 
-	public Student() {
-		panel.setLayout(new GridLayout(4,1,2,30));
-		panel.add(pageName);
-		panel.add(selectQuizName);
-		panel.add(comboBox);
-		panel.add(button);	
-		frame.add(panel);
-		frame.pack();
-		frame.setSize(500,500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
-	public static void main(String[] args) {
-		new  Student();
+public class Student extends JFrame implements ActionListener {
+   JPanel panel = new JPanel();
+   JButton button = new JButton("Take Quiz");
+   JLabel pageName = new JLabel("Student Dashboard");
+   JLabel selectQuizName = new JLabel("Select Quiz");
+   JFileChooser fc = new JFileChooser();
+
+
+   public Student() {
+      panel.setLayout(new GridLayout(4,1,2,30));
+      panel.add(pageName);
+      panel.add(selectQuizName);
+      panel.add(button);
+      this.add(panel);
+      this.pack();
+      this.setSize(500,500);
+      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      this.setVisible(true);
+
+   }
+
+   public void actionPerformed(ActionEvent e) {
+      if(e.getSource() == button) {
+         int returnVal = fc.showOpenDialog(this);
+
+         if(returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            System.out.println(file);
+         }
+         else {
+            System.out.println("Cancelled");
+         }
+      }
+   }
+   public static void main(String[] args) {
+		JFrame student = new Student();
+		student.setVisible(true);
 	}
 }
+
