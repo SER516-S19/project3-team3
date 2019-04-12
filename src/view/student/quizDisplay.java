@@ -23,15 +23,19 @@ public class quizDisplay extends JFrame implements ActionListener {
 	JLabel questionLabel = null;
 	JButton giveUpButton = null;
 	JButton nextButton = null;
-	static String[] correctAnswers = null;
+	static String correctAnswers = null;
+	static QuestionModel question = null;
 	static ArrayList<QuestionModel> questions = new ArrayList<>();
-	static List<Integer> questionNumbers = new ArrayList<>();
-	static List<Integer> incorrectQuestion = new ArrayList<>();
+	static ArrayList<QuestionModel> questionStream = new ArrayList<>();
+	static ArrayList<QuestionModel> incorrectQuestion = new ArrayList<>();
 	static int round = 0;
 	static int i = 0;
+	static boolean flag = true;
+	static boolean finished = false;
 
 
 	public quizDisplay(QuestionModel ques) {
+		question = ques;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = screenSize.height * 1 / 2;
 		int width = screenSize.width * 1 / 2;
@@ -44,6 +48,8 @@ public class quizDisplay extends JFrame implements ActionListener {
 		questionLabel.setBounds(24, 42, 368, 36);
 
 		getContentPane().add(questionLabel);
+
+		correctAnswers = ques.getCorrectOption();
 
 		optionOne = new JRadioButton(ques.getOptions().get(0));
 		optionOne.setBounds(24, 92, 153, 36);
@@ -81,8 +87,9 @@ public class quizDisplay extends JFrame implements ActionListener {
 		group.add(optionFour);
 	}
 
-	void updateFrame(int i) {
-		QuestionModel ques = questions.get(i);
+	void updateFrame(QuestionModel ques) {
+		question = ques;
+		correctAnswers = ques.getCorrectOption();
 		questionLabel.setText(ques.getTitle());
 		optionOne.setText(ques.getOptions().get(0));
 		optionOne.setActionCommand(ques.getOptions().get(0));
@@ -106,10 +113,8 @@ public class quizDisplay extends JFrame implements ActionListener {
 		}
 
 		questions = file.getQuestions();
-		correctAnswers = new String[questions.size()];
 		for(int i = 0; i < questions.size(); i++){
-			correctAnswers[i] = questions.get(i).getCorrectOption();
-			questionNumbers.add(i);
+			questionStream.add(questions.get(i));
 		}
 
 		EventQueue.invokeLater(new Runnable() {
@@ -125,57 +130,46 @@ public class quizDisplay extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		boolean flag = true;
-		boolean finished = false;
 		try {
 			if (group.getSelection().getActionCommand() == null) {
 				flag = false;
 			}
 			if (flag) {
-				if (!((group.getSelection().getActionCommand()).equals(correctAnswers[i]))) {
-					incorrectQuestion.add(i);
+				if (!((group.getSelection().getActionCommand()).equals(correctAnswers))) {
+					incorrectQuestion.add(question);
 				}
 
-				questionNumbers.remove(0);
+				questionStream.remove(0);
 
-				if (questionNumbers.isEmpty()) {
+				if (questionStream.isEmpty()) {
 					finished = true;
 				}
-				if (round == 0) {
-					updateFrame(++i);
-				} else {
-					updateFrame(questionNumbers.get(0));
-				}
-			}
-		} catch (ArrayIndexOutOfBoundsException ae) {
-			if (finished && !incorrectQuestion.isEmpty()) {
-				questionNumbers = incorrectQuestion;
-				incorrectQuestion = new ArrayList<>();
-				i = questionNumbers.get(0);
-				finished = false;
-				round++;
-				updateFrame(i);
-			} else {
-				JOptionPane.showMessageDialog(
-						null, "You successfully completed the Quiz in first Attempt",
-						"",
-						JOptionPane.INFORMATION_MESSAGE
-				);
-				System.exit(0);
+				updateFrame(questionStream.get(0));
 			}
 		} catch (NullPointerException ne) {
 			JOptionPane.showMessageDialog(
 					null,
-					"Please Select One Option",
+					"Please Select an Option",
 					"",
 					JOptionPane.ERROR_MESSAGE
 			);
 		} catch (IndexOutOfBoundsException ie) {
-			if (!finished) {
-				i = questionNumbers.get(0);
-				updateFrame(i);
+			if (finished && !incorrectQuestion.isEmpty()) {
+				finished = false;
+				questionStream = incorrectQuestion;
+				incorrectQuestion = new ArrayList<>();
+				question = questionStream.get(0);
+				round++;
+				updateFrame(question);
+			} else if (!finished) {
+					question = questionStream.get(0);
+					updateFrame(question);
 			} else {
-				JOptionPane.showMessageDialog(null, "You successfully completed the Quiz", "", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(
+						null, "You successfully completed the Quiz ",//in first Attempt",
+						"",
+						JOptionPane.INFORMATION_MESSAGE
+				);
 				System.exit(0);
 			}
 		}
