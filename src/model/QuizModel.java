@@ -90,11 +90,11 @@ public class QuizModel {
      * @return a boolean representing a successful/failed write
      */
 	private boolean writeData(JSONObject QuizJSON) {
-		try {
-			File fileCheckName = new File(path + '\\' + fileName);
+		try {System.out.println(path);
+			File fileCheckName = new File(path + (path.isEmpty() ? "" : '\\') + fileName);
 			if (fileCheckName.exists())
 				return false;
-			FileWriter file = new FileWriter(path + '\\' + fileName);
+			FileWriter file = new FileWriter(path + (path.isEmpty() ? "" : '\\') + fileName);
 
 			file.write(QuizJSON.toString());
 			file.flush();
@@ -138,7 +138,7 @@ public class QuizModel {
 	private JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
 		try {
-			FileReader file = new FileReader(path + '\\' + fileName);
+			FileReader file = new FileReader(path + (path.isEmpty() ? "" : '\\') + fileName);
 			BufferedReader br = new BufferedReader(file);
 			String currentLine;
 			String output = "";

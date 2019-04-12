@@ -109,7 +109,7 @@ public class quizDisplay extends JFrame implements ActionListener {
 		QuizModel file = new QuizModel();
 
 		try {
-			file = QuizModel.loadQuiz("exampleQuiz");
+			file = QuizModel.loadQuiz("exampleQuiz.json");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
