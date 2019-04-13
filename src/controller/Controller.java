@@ -9,10 +9,10 @@ import org.json.simple.parser.ParseException;
 import model.QuestionModel;
 import model.QuizModel;
 
-/*
- *@author: Venkata Sairam Eadala
- *@author: Joshua Drumm
- *@version: 1.0 
+/**
+ * @author: Venkata Sairam Eadala
+ * @author: Joshua Drumm
+ * @version: 1.0
  */
 
 public final class Controller {

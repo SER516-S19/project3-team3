@@ -14,11 +14,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/*
- *@author: Venkata Sairam Eadala
- *@author: Joshua Drumm
- *@author: Trevor Forrey
- *@version: 1.0 
+/**
+ * @author: Venkata Sairam Eadala
+ * @author: Joshua Drumm
+ * @author: Trevor Forrey
+ * @version: 1.0
  */
 public class QuizModel {
 
@@ -83,18 +83,19 @@ public class QuizModel {
 		return path;
 	}
 
-    /**
-     * Writes quiz json to a file
-     *
-     * @param QuizJSON The json to write to a file
-     * @return a boolean representing a successful/failed write
-     */
+	/**
+	 * Writes quiz json to a file
+	 * 
+	 * @param QuizJSON The json to write to a file
+	 * @return a boolean representing a successful/failed write
+	 */
 	private boolean writeData(JSONObject QuizJSON) {
 		try {
-			File fileCheckName = new File(path + '\\' + fileName);
+			System.out.println(path);
+			File fileCheckName = new File(path + (path.isEmpty() ? "" : '\\') + fileName);
 			if (fileCheckName.exists())
 				return false;
-			FileWriter file = new FileWriter(path + '\\' + fileName);
+			FileWriter file = new FileWriter(path + (path.isEmpty() ? "" : '\\') + fileName);
 
 			file.write(QuizJSON.toString());
 			file.flush();
@@ -106,12 +107,12 @@ public class QuizModel {
 		}
 	}
 
-    /**
-     * Converts a QuizModel into a json format and calls writeData
-     * to write the json to a file
-     *
-     * @return a boolean representing a successful/failed write
-     */
+	/**
+	 * Converts a QuizModel into a json format and calls writeData to write the json
+	 * to a file
+	 * 
+	 * @return a boolean representing a successful/failed write
+	 */
 	public boolean saveQuiz() {
 		JSONObject jsonQuiz = new JSONObject();
 		JSONArray jsonQuestions = new JSONArray();
@@ -130,15 +131,15 @@ public class QuizModel {
 		return writeData(jsonQuiz);
 	}
 
-    /**
-     * Reads json from a file
-     *
-     * @return json representation of the file read
-     */
+	/**
+	 * Reads json from a file
+	 * 
+	 * @return json representation of the file read
+	 */
 	private JSONObject readData() throws ParseException {
 		JSONObject json = new JSONObject();
 		try {
-			FileReader file = new FileReader(path + '\\' + fileName);
+			FileReader file = new FileReader(path + (path.isEmpty() ? "" : '\\') + fileName);
 			BufferedReader br = new BufferedReader(file);
 			String currentLine;
 			String output = "";
@@ -158,11 +159,11 @@ public class QuizModel {
 		return loadQuiz(fileName, "");
 	}
 
-    /**
-     * Loads Quiz given a filename and path
-     *
-     * @return QuizModel representation of file contents
-     */
+	/**
+	 * Loads Quiz given a filename and path
+	 * 
+	 * @return QuizModel representation of file contents
+	 */
 	public static QuizModel loadQuiz(String fileName, String path) throws ParseException {
 		QuizModel quiz = new QuizModel(fileName, path);
 		JSONObject jsonFile = quiz.readData();
@@ -185,12 +186,12 @@ public class QuizModel {
 		return loadQuiz(fileName);
 	}
 
-    /**
-     * Reads quiz file
-     *
-     * @return QuizModel representation of file contents
-     */
-    public static QuizModel readQuiz(File file) throws ParseException {
+	/**
+	 * Reads quiz file
+	 * 
+	 * @return QuizModel representation of file contents
+	 */
+	public static QuizModel readQuiz(File file) throws ParseException {
 		String filePath = file.getAbsolutePath();
 		filePath = filePath.substring(0, filePath.length() - (file.getName().length() + 1));
 		return loadQuiz(file.getName(), filePath);

@@ -1,64 +1,56 @@
 package view.student;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import javax.swing.*;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.json.simple.parser.ParseException;
-
 import controller.Controller;
 
 /**
  * To display the list of available quizzes
+ * 
  * @author Vijaya Gadde
  */
-public class Student extends JFrame implements ActionListener {
-	JPanel panel = new JPanel();
-	JButton button = new JButton("Take Quiz");
+public class Student extends JPanel implements ActionListener {
+	JPanel panelMain = new JPanel();
+	JButton buttonTakeQuiz = new JButton("Take Quiz");
 	JLabel pageName = new JLabel("Student Dashboard");
 	JLabel selectQuizName = new JLabel("Select Quiz");
-	JFileChooser fc = new JFileChooser();
+	JFileChooser fileChooser = new JFileChooser();
 	Controller controller;
 
 	public Student() {
-		panel.setLayout(new GridLayout(4, 1, 2, 30));
-		panel.add(pageName);
-		panel.add(selectQuizName);
-		panel.add(button);
-		button.addActionListener(this);
-		this.add(panel);
-		this.pack();
+		panelMain.setLayout(new GridLayout(4, 1, 2, 30));
+		panelMain.add(pageName);
+		panelMain.add(selectQuizName);
+		panelMain.add(buttonTakeQuiz);
+		buttonTakeQuiz.addActionListener(this);
+		this.add(panelMain);
 		this.setSize(500, 500);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		fc.setCurrentDirectory(new File("").getAbsoluteFile());
+		fileChooser.setCurrentDirectory(new File("").getAbsoluteFile());
 		FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("json files (*.json)", "json");
-		fc.addChoosableFileFilter(jsonFilter);
-		fc.setFileFilter(jsonFilter);
+		fileChooser.addChoosableFileFilter(jsonFilter);
+		fileChooser.setFileFilter(jsonFilter);
 		controller = Controller.getInstance();
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == button) {
-			int returnVal = fc.showOpenDialog(Student.this);
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				try {
-					controller.readQuiz(file);
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				System.out.println("Cancelled");
+		if (fileChooser.showOpenDialog(Student.this) == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			try {
+				controller.readQuiz(file);
+				StudentApp.updatePage(StudentViews.TAKE_QUIZ_VIEW);
+			} catch (ParseException e1) {
+				JOptionPane.showMessageDialog(null, "Error Loading File", "", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		JFrame student = new Student();
-		student.setVisible(true);
 	}
 }

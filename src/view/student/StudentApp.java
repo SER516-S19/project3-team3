@@ -1,4 +1,4 @@
-package view.professor;
+package view.student;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -6,42 +6,44 @@ import javax.swing.JFrame;
 
 /**
  * @author: Trevor Forrey
+ * @author: Joshua Drumm
  * @Description: Professor Application Main Frame
  * @version: 1.1
  */
-public final class ProfessorApp extends JFrame {
+public final class StudentApp extends JFrame {
 
 	private static Container contentPane;
 
-	public ProfessorApp() {
-		super("Professor Application");
+	public StudentApp() {
+		super("Student Application");
 		this.setSize(500, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		contentPane.add(new Professor(), BorderLayout.CENTER);
+		contentPane.add(new Student(), BorderLayout.CENTER);
 		contentPane.repaint();
 		contentPane.revalidate();
 		this.setVisible(true);
 	}
 
-	public static void updatePage(ProfessorViews viewToChange) {
+	public static void updatePage(StudentViews viewToChange) {
 		switch (viewToChange) {
-		case CREATE_QUIZ_VIEW:
+		case TAKE_QUIZ_VIEW:
 			contentPane.removeAll();
-			contentPane.add(new CreateNewQuiz(), BorderLayout.CENTER);
+			contentPane.add(new QuizDisplay(), BorderLayout.CENTER);
 			contentPane.repaint();
 			contentPane.revalidate();
 			break;
 		case WELCOME_VIEW:
 			contentPane.removeAll();
-			contentPane.add(new Professor(), BorderLayout.CENTER);
+			contentPane.add(new Student(), BorderLayout.CENTER);
 			contentPane.repaint();
 			contentPane.revalidate();
 			break;
-		case QUIZ_CREATION_ACKNOWLEDGEMENT:
+		case QUIZ_COMPLETION_ACKNOWLEDGEMENT:
 			contentPane.removeAll();
-			contentPane.add(new ProfessorAcknowledgement(), BorderLayout.CENTER);
+			contentPane.add(new StudentAcknowledgement(), BorderLayout.CENTER);
 			contentPane.repaint();
 			contentPane.revalidate();
 			break;
@@ -51,6 +53,6 @@ public final class ProfessorApp extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new ProfessorApp();
+		new StudentApp();
 	}
 }
