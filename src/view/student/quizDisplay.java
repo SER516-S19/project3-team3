@@ -5,6 +5,7 @@ import controller.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ public class QuizDisplay extends JPanel implements ActionListener {
 	private JLabel questionLabel;
 	private JButton giveUpButton;
 	private JButton nextButton;
-	private String correctAnswers;
+	private String correctAnswer;
 	private QuestionModel question;
 	private ArrayList<QuestionModel> questions = new ArrayList<>();
 	private ArrayList<QuestionModel> incorrectQuestion = new ArrayList<>();
@@ -38,31 +39,30 @@ public class QuizDisplay extends JPanel implements ActionListener {
 		questionLabel = new JLabel(question.getTitle());
 		questionLabel.setBounds(24, 42, 368, 36);
 		add(questionLabel);
-		correctAnswers = question.getCorrectOption();
+		correctAnswer = question.getCorrectOption();
 		options = new ArrayList<>(4);
 		for (int i = 0; i < question.getOptions().size(); i++) {
 			options.add(new JRadioButton());
 			add(options.get(i));
 		}
-		options.get(0).setBounds(24, 92, 153, 36);
-		options.get(1).setBounds(256, 92, 136, 36);
-		options.get(2).setBounds(24, 156, 153, 36);
-		options.get(3).setBounds(256, 156, 136, 36);
+		options.get(0).setBounds(24, 100, 1000, 36);
+		options.get(1).setBounds(24, 150, 1000, 36);
+		options.get(2).setBounds(24, 200, 1000, 36);
+		options.get(3).setBounds(24, 250, 1000, 36);
 		group = new ButtonGroup();
 		for (JRadioButton option : options)
 			group.add(option);
 		updateFrame(question);
 		giveUpButton = new JButton("Give Up");
-		giveUpButton.setBounds(88, 212, 89, 23);
-    giveUpButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e)
-      {
-        StudentApp.updatePage(StudentViews.QUIZ_COMPLETION_ACKNOWLEDGEMENT);
-      }
-    });
+		giveUpButton.setBounds(88, 300, 89, 23);
+		giveUpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StudentApp.updatePage(StudentViews.QUIZ_COMPLETION_ACKNOWLEDGEMENT);
+			}
+		});
 		add(giveUpButton);
 		nextButton = new JButton("Next");
-		nextButton.setBounds(250, 212, 89, 23);
+		nextButton.setBounds(250, 300, 89, 23);
 		add(nextButton);
 		nextButton.addActionListener(this);
 		setVisible(true);
@@ -70,8 +70,9 @@ public class QuizDisplay extends JPanel implements ActionListener {
 
 	void updateFrame(QuestionModel ques) {
 		question = ques;
-		correctAnswers = ques.getCorrectOption();
+		correctAnswer = ques.getCorrectOption();
 		questionLabel.setText(ques.getTitle());
+		Collections.shuffle(ques.getOptions());
 		for (int i = 0; i < options.size(); i++) {
 			options.get(i).setText(ques.getOptions().get(i));
 			options.get(i).setActionCommand(ques.getOptions().get(i));
@@ -81,7 +82,7 @@ public class QuizDisplay extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (group.getSelection() != null) {
-			if (!((group.getSelection().getActionCommand()).equals(correctAnswers)))
+			if (!((group.getSelection().getActionCommand()).equals(correctAnswer)))
 				incorrectQuestion.add(question);
 			questions.remove(0);
 			if (!questions.isEmpty())

@@ -18,7 +18,6 @@ public final class StudentApp extends JFrame {
 		super("Student Application");
 		this.setSize(500, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(new Student(), BorderLayout.CENTER);

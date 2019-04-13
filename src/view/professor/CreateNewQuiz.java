@@ -134,7 +134,7 @@ public class CreateNewQuiz extends JPanel {
 				if (selectedRadio.isSelected()) {
 					String selectionRadioButton = selectedRadio.getName();
 					switch (selectionRadioButton) {
-					case "radioButton":
+					case "radioButton_0":
 						selectedText = options.get(0).getText();
 						break;
 					case "radioButton_1":

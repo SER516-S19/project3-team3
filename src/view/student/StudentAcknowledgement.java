@@ -17,7 +17,7 @@ public class StudentAcknowledgement extends JPanel {
 	public StudentAcknowledgement() {
 		setBounds(100, 100, 450, 300);
 		setLayout(null);
-		JLabel lblNewLabel = new JLabel("Quiz Submitted Successfully");
+		JLabel lblNewLabel = new JLabel("Quiz Completed");
 		lblNewLabel.setBounds(149, 86, 207, 52);
 		add(lblNewLabel);
 		JButton btnDashboard = new JButton("DashBoard");
