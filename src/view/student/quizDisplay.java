@@ -54,6 +54,12 @@ public class QuizDisplay extends JPanel implements ActionListener {
 		updateFrame(question);
 		giveUpButton = new JButton("Give Up");
 		giveUpButton.setBounds(88, 212, 89, 23);
+    giveUpButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e)
+      {
+        StudentApp.updatePage(StudentViews.QUIZ_COMPLETION_ACKNOWLEDGEMENT);
+      }
+    });
 		add(giveUpButton);
 		nextButton = new JButton("Next");
 		nextButton.setBounds(250, 212, 89, 23);
