@@ -134,6 +134,10 @@ public class quizDisplay extends JFrame implements ActionListener {
 
 /* Checks the correct answers, Updates data and calls updateFrame() function whenever the user clicks the next button  */
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == giveUpButton) {
+			StudentAcknowledgement studentAck = new StudentAcknowledgement(); // calls the Student Acknowledgement Page
+			}
 		try {
 			if (group.getSelection().getActionCommand() == null) {
 				flag = false;
@@ -151,12 +155,17 @@ public class quizDisplay extends JFrame implements ActionListener {
 				updateFrame(questionStream.get(0));
 			}
 		} catch (NullPointerException ne) {
+			if(e.getSource() == giveUpButton) {
+				StudentAcknowledgement studentAck = new StudentAcknowledgement();
+			}
+			else {
 			JOptionPane.showMessageDialog(
 					null,
 					"Please Select an Option",
 					"",
 					JOptionPane.ERROR_MESSAGE
 			);
+			}
 		} catch (IndexOutOfBoundsException ie) {
 			if (finished && !incorrectQuestion.isEmpty()) {
 				finished = false;
@@ -169,12 +178,8 @@ public class quizDisplay extends JFrame implements ActionListener {
 					question = questionStream.get(0);
 					updateFrame(question);
 			} else {
-				JOptionPane.showMessageDialog(
-						null, "You successfully completed the Quiz ",//in first Attempt",
-						"",
-						JOptionPane.INFORMATION_MESSAGE
-				);
-				System.exit(0);
+				//Quiz Completed Succesfully
+				StudentAcknowledgement studentAck = new StudentAcknowledgement();
 			}
 		}
 	}
