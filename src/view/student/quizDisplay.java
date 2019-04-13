@@ -1,183 +1,94 @@
 package view.student;
 
 import model.QuestionModel;
-import model.QuizModel;
-import javax.swing.*;
-import java.awt.*;
+import controller.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
-/*
- *@author: Abhishek Gupta
- *@author: Krishna Gurram
- *@version: 1.0
+/**
+ * @author: Abhishek Gupta
+ * @author: Krishna Gurram
+ * @author: Joshua Drumm
+ * @version: 1.0
  */
-public class quizDisplay extends JFrame implements ActionListener {
+public class QuizDisplay extends JPanel implements ActionListener {
+	private ArrayList<JRadioButton> options;
+	private ButtonGroup group;
+	private JLabel questionLabel;
+	private JButton giveUpButton;
+	private JButton nextButton;
+	private String correctAnswers;
+	private QuestionModel question;
+	private ArrayList<QuestionModel> questions = new ArrayList<>();
+	private ArrayList<QuestionModel> incorrectQuestion = new ArrayList<>();
+	private Controller controller;
 
-	JRadioButton optionOne = null;
-	JRadioButton optionTwo = null;
-	JRadioButton optionThree = null;
-	JRadioButton optionFour = null;
-	ButtonGroup group = null;
-	JLabel questionLabel = null;
-	JButton giveUpButton = null;
-	JButton nextButton = null;
-	static String correctAnswers = null;
-	static QuestionModel question = null;
-	static ArrayList<QuestionModel> questions = new ArrayList<>();
-	static ArrayList<QuestionModel> questionStream = new ArrayList<>();
-	static ArrayList<QuestionModel> incorrectQuestion = new ArrayList<>();
-	static int round = 0;
-	static int i = 0;
-	static boolean flag = true;
-	static boolean finished = false;
-
-/*Get's the data from Controller and displays the quiz when the JFrame is launched initially */
-	public quizDisplay(QuestionModel ques) {
-		question = ques;
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int height = screenSize.height * 1 / 2;
-		int width = screenSize.width * 1 / 2;
-		setSize(new Dimension(width, height));
-		setTitle("Take Quiz");
-
-		getContentPane().setLayout(null);
-
-		questionLabel = new JLabel(ques.getTitle());
+	public QuizDisplay() {
+		controller = Controller.getInstance();
+		questions = controller.getQuizQuestions();
+		question = questions.get(0);
+		setLayout(null);
+		questionLabel = new JLabel(question.getTitle());
 		questionLabel.setBounds(24, 42, 368, 36);
-
-		getContentPane().add(questionLabel);
-
-		correctAnswers = ques.getCorrectOption();
-
-		optionOne = new JRadioButton(ques.getOptions().get(0));
-		optionOne.setBounds(24, 92, 153, 36);
-		optionOne.setActionCommand(ques.getOptions().get(0));
-		getContentPane().add(optionOne);
-
-		optionTwo = new JRadioButton(ques.getOptions().get(1));
-		optionTwo.setBounds(256, 92, 136, 36);
-		optionTwo.setActionCommand(ques.getOptions().get(1));
-		getContentPane().add(optionTwo);
-
-		optionThree = new JRadioButton(ques.getOptions().get(2));
-		optionThree.setBounds(24, 156, 153, 36);
-		optionThree.setActionCommand(ques.getOptions().get(2));
-		getContentPane().add(optionThree);
-
-		optionFour = new JRadioButton(ques.getOptions().get(3));
-		optionFour.setBounds(256, 156, 136, 36);
-		optionFour.setActionCommand(ques.getOptions().get(3));
-		getContentPane().add(optionFour);
-
+		add(questionLabel);
+		correctAnswers = question.getCorrectOption();
+		options = new ArrayList<>(4);
+		for (int i = 0; i < question.getOptions().size(); i++) {
+			options.add(new JRadioButton());
+			add(options.get(i));
+		}
+		options.get(0).setBounds(24, 92, 153, 36);
+		options.get(1).setBounds(256, 92, 136, 36);
+		options.get(2).setBounds(24, 156, 153, 36);
+		options.get(3).setBounds(256, 156, 136, 36);
+		group = new ButtonGroup();
+		for (JRadioButton option : options)
+			group.add(option);
+		updateFrame(question);
 		giveUpButton = new JButton("Give Up");
 		giveUpButton.setBounds(88, 212, 89, 23);
-		getContentPane().add(giveUpButton);
-
+		add(giveUpButton);
 		nextButton = new JButton("Next");
 		nextButton.setBounds(250, 212, 89, 23);
-		getContentPane().add(nextButton);
-		nextButton.addActionListener(this);// Registering ActionListener to the button
-
-		group = new ButtonGroup();
-		group.add(optionOne);
-		group.add(optionTwo);
-		group.add(optionThree);
-		group.add(optionFour);
+		add(nextButton);
+		nextButton.addActionListener(this);
+		setVisible(true);
 	}
 
-/* Updates the Frame with questions and options when student clicks next button */ 
 	void updateFrame(QuestionModel ques) {
 		question = ques;
 		correctAnswers = ques.getCorrectOption();
 		questionLabel.setText(ques.getTitle());
-		optionOne.setText(ques.getOptions().get(0));
-		optionOne.setActionCommand(ques.getOptions().get(0));
-		optionTwo.setText(ques.getOptions().get(1));
-		optionTwo.setActionCommand(ques.getOptions().get(1));
-		optionThree.setText(ques.getOptions().get(2));
-		optionThree.setActionCommand(ques.getOptions().get(2));
-		optionFour.setText(ques.getOptions().get(3));
-		optionFour.setActionCommand(ques.getOptions().get(3));
+		for (int i = 0; i < options.size(); i++) {
+			options.get(i).setText(ques.getOptions().get(i));
+			options.get(i).setActionCommand(ques.getOptions().get(i));
+		}
 		group.clearSelection();
 	}
 
-/* Main method to create an Instance of the JFrame */
-	public static void main(String[] args) {
-
-		QuizModel file = new QuizModel();
-
-		try {
-			file = QuizModel.loadQuiz("exampleQuiz.json");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		questions = file.getQuestions();
-		for(int i = 0; i < questions.size(); i++){
-			questionStream.add(questions.get(i));
-		}
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					quizDisplay frame = new quizDisplay(questions.get(0));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-/* Checks the correct answers, Updates data and calls updateFrame() function whenever the user clicks the next button  */
 	public void actionPerformed(ActionEvent e) {
-		try {
-			if (group.getSelection().getActionCommand() == null) {
-				flag = false;
-			}
-			if (flag) {
-				if (!((group.getSelection().getActionCommand()).equals(correctAnswers))) {
-					incorrectQuestion.add(question);
-				}
-
-				questionStream.remove(0);
-
-				if (questionStream.isEmpty()) {
-					finished = true;
-				}
-				updateFrame(questionStream.get(0));
-			}
-		} catch (NullPointerException ne) {
-			JOptionPane.showMessageDialog(
-					null,
-					"Please Select an Option",
-					"",
-					JOptionPane.ERROR_MESSAGE
-			);
-		} catch (IndexOutOfBoundsException ie) {
-			if (finished && !incorrectQuestion.isEmpty()) {
-				finished = false;
-				questionStream = incorrectQuestion;
+		if (group.getSelection() != null) {
+			if (!((group.getSelection().getActionCommand()).equals(correctAnswers)))
+				incorrectQuestion.add(question);
+			questions.remove(0);
+			if (!questions.isEmpty())
+				updateFrame(questions.get(0));
+			else if (!incorrectQuestion.isEmpty()) {
+				questions = incorrectQuestion;
 				incorrectQuestion = new ArrayList<>();
-				question = questionStream.get(0);
-				round++;
+				question = questions.get(0);
 				updateFrame(question);
-			} else if (!finished) {
-					question = questionStream.get(0);
-					updateFrame(question);
 			} else {
-				JOptionPane.showMessageDialog(
-						null, "You successfully completed the Quiz ",//in first Attempt",
-						"",
-						JOptionPane.INFORMATION_MESSAGE
-				);
-				System.exit(0);
+				StudentApp.updatePage(StudentViews.QUIZ_COMPLETION_ACKNOWLEDGEMENT);
 			}
-		}
+		} else
+			JOptionPane.showMessageDialog(null, "Please Select an Option", "", JOptionPane.ERROR_MESSAGE);
 	}
-
-
 }

@@ -2,11 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
-/*
- *@author: Venkata Sairam Eadala
- *@author: Joshua Drumm
- *@author: Trevor Forrey
- *@version: 1.0 
+/**
+ * @author: Venkata Sairam Eadala
+ * @author: Joshua Drumm
+ * @author: Trevor Forrey
+ * @version: 1.0
  */
 public class QuestionModel {
 	private String title;

@@ -1,118 +1,98 @@
 package view.professor;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import org.json.simple.parser.ParseException;
-
 import controller.Controller;
-import model.QuestionModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-/*
- *@author: Bharat Goel
- *@author: Joshua Drumm
- *@author: Trevor Forrey
- *@version: 1.0
+/**
+ * @author: Bharat Goel
+ * @author: Joshua Drumm
+ * @author: Trevor Forrey
+ * @version: 1.0
  */
-@SuppressWarnings({ "serial", "unused" })
 public class CreateNewQuiz extends JPanel {
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private ArrayList<JTextField> options;
+	private ArrayList<JRadioButton> radioButtons;
+	private ArrayList<JLabel> optionLabels;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private String quizTitle;
-	private JLabel lblQuizTitle;
-	private JTextField textField_5;
+	private JLabel labelQuizTitle, labelQuestionTitle;
+	private JTextField textFieldQuizTitle, textFieldQuestionTitle;;
 	private Controller controller;
-	JFileChooser fileChooser;
+	private JFileChooser fileChooser;
 
 	public CreateNewQuiz() {
-
 		controller = Controller.getInstance();
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("").getAbsoluteFile());
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(null);
-
-		textField = new JTextField();
-		textField.setBounds(21, 61, 292, 20);
-		this.add(textField);
-		textField.setColumns(10);
-
-		JRadioButton radioButton = new JRadioButton("");
-		buttonGroup.add(radioButton);
-		radioButton.setName("radioButton");
-		radioButton.setBounds(18, 89, 21, 23);
-		this.add(radioButton);
-
-		textField_1 = new JTextField();
-		textField_1.setBounds(45, 92, 268, 20);
-		this.add(textField_1);
-		textField_1.setColumns(10);
-
-		JRadioButton radioButton_1 = new JRadioButton("");
-		buttonGroup.add(radioButton_1);
-		radioButton_1.setName("radioButton_1");
-		radioButton_1.setBounds(21, 120, 21, 23);
-		this.add(radioButton_1);
-
-		textField_2 = new JTextField();
-		textField_2.setBounds(45, 123, 268, 20);
-		this.add(textField_2);
-		textField_2.setColumns(10);
-
-		JRadioButton radioButton_2 = new JRadioButton("");
-		buttonGroup.add(radioButton_2);
-		radioButton_2.setName("radioButton_1");
-		radioButton_2.setBounds(21, 151, 21, 23);
-		this.add(radioButton_2);
-
-		textField_3 = new JTextField();
-		textField_3.setBounds(45, 154, 268, 20);
-        this.add(textField_3);
-		textField_3.setColumns(10);
-
-		JRadioButton radioButton_3 = new JRadioButton("");
-		buttonGroup.add(radioButton_3);
-		radioButton_3.setName("radioButton_3");
-		radioButton_3.setBounds(21, 182, 21, 23);
-        this.add(radioButton_3);
-
-		textField_4 = new JTextField();
-		textField_4.setBounds(45, 185, 268, 20);
-        this.add(textField_4);
-		textField_4.setColumns(10);
-
-		lblQuizTitle = new JLabel("Quiz Title");
-		lblQuizTitle.setBounds(24, 23, 66, 14);
-        this.add(lblQuizTitle);
-
-		textField_5 = new JTextField();
-		textField_5.setBounds(88, 20, 173, 20);
-        this.add(textField_5);
-		textField_5.setColumns(10);
-
-		JButton btnAddQuestions = new JButton("Add Questions");
+		options = new ArrayList<>(4);
+		radioButtons = new ArrayList<>(4);
+		optionLabels = new ArrayList<>(4);
+		for (int i = 0; i < 4; i++) {
+			JTextField newOption = new JTextField();
+			newOption.setColumns(10);
+			options.add(newOption);
+			add(newOption);
+			JRadioButton radioButton = new JRadioButton("");
+			radioButtons.add(radioButton);
+			buttonGroup.add(radioButton);
+			radioButton.setName("radioButton_" + i);
+			add(radioButton);
+			JLabel optionLabel = new JLabel("Option " + (i + 1));
+			optionLabels.add(optionLabel);
+			add(optionLabel);
+		}
+		options.get(0).setBounds(125, 92, 268, 20);
+		options.get(1).setBounds(125, 123, 268, 20);
+		options.get(2).setBounds(125, 154, 268, 20);
+		options.get(3).setBounds(125, 185, 268, 20);
+		radioButtons.get(0).setBounds(100, 89, 21, 23);
+		radioButtons.get(1).setBounds(100, 120, 21, 23);
+		radioButtons.get(2).setBounds(100, 151, 21, 23);
+		radioButtons.get(3).setBounds(100, 182, 21, 23);
+		optionLabels.get(0).setBounds(50, 92, 268, 20);
+		optionLabels.get(1).setBounds(50, 123, 268, 20);
+		optionLabels.get(2).setBounds(50, 154, 268, 20);
+		optionLabels.get(3).setBounds(50, 185, 268, 20);
+		labelQuizTitle = new JLabel("Quiz Title");
+		labelQuizTitle.setBounds(25, 23, 66, 14);
+		this.add(labelQuizTitle);
+		textFieldQuizTitle = new JTextField();
+		textFieldQuizTitle.setBounds(88, 20, 173, 20);
+		labelQuestionTitle = new JLabel("Question");
+		labelQuestionTitle.setBounds(25, 60, 66, 14);
+		this.add(labelQuestionTitle);
+		textFieldQuestionTitle = new JTextField();
+		textFieldQuestionTitle.setBounds(88, 60, 292, 20);
+		this.add(textFieldQuestionTitle);
+		textFieldQuestionTitle.setColumns(10);
+		this.add(textFieldQuizTitle);
+		textFieldQuizTitle.setColumns(10);
+		JButton btnAddQuestions = new JButton("Add Question");
 		btnAddQuestions.addActionListener(new AddQuestionActionListener());
-		btnAddQuestions.setBounds(171, 227, 110, 23);
-        this.add(btnAddQuestions);
-
+		btnAddQuestions.setBounds(171, 227, 130, 23);
+		this.add(btnAddQuestions);
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new AddAndSaveQuestionActionListener());
 		btnSubmit.setBounds(319, 227, 89, 23);
-        this.add(btnSubmit);
-
+		this.add(btnSubmit);
 		JButton btnDirectory = new JButton("Set Directory");
 		btnDirectory.addActionListener(new ActionListener() {
 			@Override
@@ -129,78 +109,54 @@ public class CreateNewQuiz extends JPanel {
 		});
 		btnDirectory.setBounds(25, 227, 125, 23);
 		this.add(btnDirectory);
-
 		controller.createQuiz();
 	}
 
 	public boolean checkAnyFieldsEmpty() {
-		String option1 = textField_1.getText();
-		String option2 = textField_2.getText();
-		String option3 = textField_3.getText();
-		String option4 = textField_4.getText();
-		String title = textField.getText();
-		return option1.isEmpty() || option2.isEmpty() || option3.isEmpty() || option4.isEmpty() || title.isEmpty()
-				|| buttonGroup.getSelection() == null;
+		return options.get(0).getText().isEmpty() || options.get(1).getText().isEmpty()
+				|| options.get(2).getText().isEmpty() || options.get(3).getText().isEmpty()
+				|| textFieldQuestionTitle.getText().isEmpty() || buttonGroup.getSelection() == null;
 	}
 
 	public boolean checkFieldsCompletelyEmpty() {
-		String option1 = textField_1.getText();
-		String option2 = textField_2.getText();
-		String option3 = textField_3.getText();
-		String option4 = textField_4.getText();
-		String title = textField.getText();
-		String combined = option1 + option2 + option3 + option4 + title;
-		return combined.isEmpty();
+		return options.get(0).getText().isEmpty() && options.get(1).getText().isEmpty()
+				&& options.get(2).getText().isEmpty() && options.get(3).getText().isEmpty()
+				&& textFieldQuestionTitle.getText().isEmpty();
 	}
 
 	private class AddQuestionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
 			String selectedText = null;
-			String title = textField.getText();
-
-			String option1 = textField_1.getText();
-			String option2 = textField_2.getText();
-			String option3 = textField_3.getText();
-			String option4 = textField_4.getText();
-
+			String title = textFieldQuestionTitle.getText();
 			Enumeration<AbstractButton> selectedButton = buttonGroup.getElements();
-
 			while (selectedButton.hasMoreElements()) {
-
 				JRadioButton selectedRadio = (JRadioButton) selectedButton.nextElement();
 				if (selectedRadio.isSelected()) {
 					String selectionRadioButton = selectedRadio.getName();
-
 					switch (selectionRadioButton) {
 					case "radioButton":
-						selectedText = textField_1.getText();
+						selectedText = options.get(0).getText();
 						break;
 					case "radioButton_1":
-						selectedText = textField_2.getText();
+						selectedText = options.get(1).getText();
 						break;
 					case "radioButton_2":
-						selectedText = textField_3.getText();
+						selectedText = options.get(2).getText();
 						break;
 					case "radioButton_3":
-						selectedText = textField_4.getText();
+						selectedText = options.get(3).getText();
 						break;
 					}
 				}
 			}
-
 			if (!checkAnyFieldsEmpty()) {
-				ArrayList<String> options = new ArrayList<String>(4);
-				options.add(option1);
-				options.add(option2);
-				options.add(option3);
-				options.add(option4);
-				controller.addQuestion(title, options, selectedText);
-				textField_1.setText("");
-				textField_2.setText("");
-				textField_3.setText("");
-				textField_4.setText("");
-				textField.setText("");
+				ArrayList<String> inputOptions = new ArrayList<String>(4);
+				for (JTextField option : options) {
+					inputOptions.add(option.getText());
+					option.setText("");
+				}
+				controller.addQuestion(title, inputOptions, selectedText);
+				textFieldQuestionTitle.setText("");
 				buttonGroup.clearSelection();
 				JOptionPane.showMessageDialog(null, "Question Has Been Saved!");
 			} else if (!checkFieldsCompletelyEmpty())
@@ -211,23 +167,20 @@ public class CreateNewQuiz extends JPanel {
 	private class AddAndSaveQuestionActionListener extends AddQuestionActionListener {
 		public void actionPerformed(ActionEvent e) {
 			super.actionPerformed(e);
-
-			quizTitle = textField_5.getText();
+			quizTitle = textFieldQuizTitle.getText();
 			if (quizTitle.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Please Name your Quiz");
 				return;
 			}
 			if (!checkAnyFieldsEmpty() || !checkFieldsCompletelyEmpty())
 				return;
-
-            quizTitle = textField_5.getText();
 			controller.setQuizTitle(quizTitle);
 			boolean isFile = controller.saveModel();
 			if (!isFile)
 				JOptionPane.showMessageDialog(null, "File Exits, Change Quiz Title");
 			else {
-                ProfessorApp.updatePage(View.QUIZ_CREATION_ACKNOWLEDGEMENT);
-            }
+				ProfessorApp.updatePage(ProfessorViews.QUIZ_CREATION_ACKNOWLEDGEMENT);
+			}
 		}
 	}
 }
